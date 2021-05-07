@@ -21,7 +21,7 @@
     }
     var tablehtml = "";
     for (var i=0; i<vals.length; i++) {
-       tablehtml = tablehtml + "\n<tr><td>"+keys[i]+"</td><td>"+vals+"</td></tr>";
+       tablehtml = tablehtml + "\n<tr><td>"+keys[i]+"</td><td>"+vals[i]+"</td></tr>";
     }
     document.getElementById("get").innerHTML = tablehtml;
    }
@@ -32,8 +32,12 @@
    <h1>GET request</h1>
   </header>
   <p>Below is the GET request you sent this script.</p>
-  <table id="get">
-   <tr><th>key</th><th>value</th></tr>
+  <table>
+   <thead>
+    <tr><th>key</th><th>value</th></tr>
+   </thead>
+   <tbody id="get">
+   </tbody>
   </table>
  </body>
 </html>
