@@ -10,7 +10,17 @@
   <link rel="stylesheet" href="/vt-netlify-theme.css">
   <script>
    function gogen() {
-     
+     var a = document.getElementById("appendhere");
+     var n = document.getElementById("name").value;
+     var m = document.getElementById("msg").value;
+     var dt = new Date();
+     var h = dt.getHours().toString();
+     var m = dt.getMinutes().toString();
+     var s = dt.getSeconds().toString();
+     var y = dt.getFullYear().toString();
+     var mo = dt.getMonth().toString()
+     var d = dt.getDate().toString()
+     a.innerHTML=a.innerHTML+"<tr><td>"+n+"</td><td>"+m+"</td><td>"+h+":"+m+":"+s+"</td><td>"+mo+"/"+d+"/"+y+"</td></tr>"
    }
   </script>
  </head>
@@ -27,8 +37,8 @@
   </table>
   <table>
     <tbody>
-     <tr><td>Name</td><td><input style="width:100%;" type="text"></td></tr>
-     <tr><td>Msg</td><td><input style="width:100%;" type="text" id="msg"></td></tr>
+     <tr><td>Name</td><td><input style="width:100%;" type="text" id="name" /></td></tr>
+     <tr><td>Msg</td><td><input style="width:100%;" type="text" id="msg" /></td></tr>
      <tr><td><font color=red>E</font>?</td><td><button onclick="gogen()">Append</button></td></tr>
     </tbody>
    </table>
