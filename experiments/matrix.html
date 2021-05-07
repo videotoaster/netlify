@@ -14,8 +14,18 @@
    <p>It (kinda) works!</p>
   </header>
   <table>
-    <tr><td>Username</td><td><input style="width:100%" type="text" id="username" placeholder="username" /></td></tr>
-    <tr><td>Password</td><td><input style="width:100%" type="password" id="password" placeholder="password" /></td></tr>
-    <tr><td>Homeserver</td><td><input style="width:100%" type="text" id="password" placeholder="homeserver" value="https://matrix.org" /></td></tr>
+   <tr><td>Username</td><td><input style="width:100%" type="text" id="username" placeholder="username" /></td></tr>
+   <tr><td>Password</td><td><input style="width:100%" type="password" id="password" placeholder="password" /></td></tr>
+   <tr><td>Homeserver</td><td><input style="width:100%" type="text" id="homeserv" placeholder="homeserver" value="https://matrix.org" /></td></tr>
+   <tr><td>Ready?</td><td><button>Log into Matrix</button></td></tr>
+  </table>
+  <textarea disabled="true" style="width:100%;resize:none;color:white;">
+This is a console.
+JavaScript events will be recorded here.
+Note that you can't type here, and this is not the message entry box.
+  </textarea>
+  <table>
+   <tr><td><input style="width:100%" type="text" id="msg" /></td><td><button>Send</button></td></tr>
+  </table>
  </body>
 </html>
