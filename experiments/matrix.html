@@ -23,24 +23,23 @@
     };
     xhttp.open("POST", document.getElementById("homeserv").value+"/_matrix/client/r0/login", true);
     xhttp.send(JSON.stringify(data));
+    document.getElementById("logon").style.display="none";
+    document.getElementById("console").style = "width:100%;resize:none;color:white;height:55%";
+    document.getElementById("controldeck").style = "";
    }
   </script>
  </head>
  <body>
-  <header>
-   <h1>Matrix Client</h1>
-   <p>It (kinda) works!</p>
-  </header>
-  <table>
+  <table id="logon">
    <tr><td>Username</td><td><input style="width:100%" type="text" id="username" placeholder="username" /></td></tr>
    <tr><td>Password</td><td><input style="width:100%" type="password" id="password" placeholder="password" /></td></tr>
    <tr><td>Homeserver</td><td><input style="width:100%" type="text" id="homeserv" placeholder="homeserver" value="https://matrix.org" /></td></tr>
    <tr><td>Ready?</td><td><button onclick="login()">Log into Matrix</button></td></tr>
   </table>
-  <textarea id="console" disabled="true" style="width:100%;resize:none;color:white;">
+  <textarea id="console" disabled="true" style="display:none;">
 Press the login button to see stuff happen here
   </textarea>
-  <table>
+  <table id="controldeck" style="display:none;">
    <tr><td><input style="width:100%" type="text" id="msg" /></td><td><button>Send</button></td></tr>
   </table>
  </body>
