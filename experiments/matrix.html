@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
   <link rel="stylesheet" href="/vt-netlify-theme.css">
   <script>
+   var token = "";
    function login() {
     var xhttp = new XMLHttpRequest();
     var data = {
@@ -18,7 +19,8 @@
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var json = JSON.parse(this.responseText);
-        document.getElementById("console").value = "Access token: "+json.access_token;
+        token = json.access_token;
+        document.getElementById("console").value = "Access token: "+token;
       }
     };
     xhttp.open("POST", document.getElementById("homeserv").value+"/_matrix/client/r0/login", true);
@@ -27,17 +29,37 @@
     document.getElementById("console").style = "width:100%;resize:none;color:white;height:55%";
     document.getElementById("controldeck").style = "";
    }
+   function sendmsg() {
+    var xhttp = new XMLHttpRequest();
+    var data = {
+     "msgtype":"m.text",
+     "body":"hello"
+    }
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var json = JSON.parse(this.responseText);
+        document.getElementById("console").value = document.getElementById("console").value + "\nMessage sent [event "+json.event_id+"]";
+      }
+    };
+    var endpt = document.getElementById("homeserv").value+
+                "/_matrix/client/r0/rooms/"+
+                document.getElementById("roomname").value+
+                +"/send/m.room.message?access_token="+token;
+    xhttp.open("POST", endpt, true);
+    xhttp.send(JSON.stringify(data));
+   }
   </script>
  </head>
  <body>
   <table id="logon">
+   <tr><td>Homeserver</td><td><input style="width:100%" type="text" id="homeserv" placeholder="homeserver" value="https://matrix.org" /></td></tr>
    <tr><td>Username</td><td><input style="width:100%" type="text" id="username" placeholder="username" /></td></tr>
    <tr><td>Password</td><td><input style="width:100%" type="password" id="password" placeholder="password" /></td></tr>
-   <tr><td>Homeserver</td><td><input style="width:100%" type="text" id="homeserv" placeholder="homeserver" value="https://matrix.org" /></td></tr>
+   <tr><td>Room</td><td><input style="width:100%" type="text" id="roomname" placeholder="room name" /></td></tr>
    <tr><td>Ready?</td><td><button onclick="login()">Log into Matrix</button></td></tr>
   </table>
   <textarea id="console" disabled="true" style="display:none;">
-Press the login button to see stuff happen here
+Logging in...
   </textarea>
   <table id="controldeck" style="display:none;">
    <tr><td><input style="width:100%" type="text" id="msg" /></td><td><button>Send</button></td></tr>
