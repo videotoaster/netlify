@@ -43,7 +43,7 @@
       }
     };
     
-    var endpt = document.getElementById("homeserv").value+"/_matrix/client/r0/rooms/".toString()+document.getElementById("roomname").value.toString()+"/send/m.room.message?access_token=".toString()+token.toString();
+    var endpt = document.getElementById("homeserv").value+"/_matrix/client/r0/rooms/".toString()+encodeURIComponent(document.getElementById("roomname").value.toString())+"/send/m.room.message?access_token=".toString()+token.toString();
     
     xhttp.open("POST", endpt, true);
     xhttp.send(JSON.stringify(data));
