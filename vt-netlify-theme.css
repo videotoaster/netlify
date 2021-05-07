@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: share-tech-mono;
-  src: url("/fonts/ShareTechMono-Regular.ttf"), format("truetype");
+  src: url("https://video.catvibers.me/fonts/ShareTechMono-Regular.ttf"), format("truetype");
 }
 
 :root {
