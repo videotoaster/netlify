@@ -15,6 +15,14 @@
    for(var key of searchParams.keys()) {
       keys.push(key);
    }
+   for(var value of searchParams.values()) {
+      vals.push(value);
+   }
+   var tablehtml = "";
+   for (var i=0; i<vals.length; i++) {
+      tablehtml = tablehtml + "\n<tr><td>"+keys[i]+"</td><td>"+vals+"</td></tr>";
+   }
+   document.getElementById("get").innerHTML = tablehtml
   </script>
  </head>
  <body onload="parseget()">
@@ -22,6 +30,8 @@
    <h1>GET request</h1>
   </header>
   <p>Below is the GET request you sent this script.</p>
-  <table id="get"></table>
+  <table id="get">
+   <tr><th>key</th><th>value</th></tr>
+  </table>
  </body>
 </html>
