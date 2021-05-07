@@ -21,7 +21,7 @@
         document.getElementById("console").value = "Access token: "+json.access_token;
       }
     };
-    xhttp.open("POST", document.getElementById("homeserver").value+"/_matrix/client/r0/login", true);
+    xhttp.open("POST", document.getElementById("homeserv").value+"/_matrix/client/r0/login", true);
     xhttp.send(JSON.stringify(data));
    }
   </script>
