@@ -10,8 +10,9 @@
    function swoop(e) {
     var x = e.clientX;
     var y = e.clientY;
-    document.getElementById("bandicam").style.left = e.clientX;
-    document.getElementById("bandicam").style.top = e.clientY;
+    document.getElementById("bandicam").style.position = "relative";
+    document.getElementById("bandicam").style.left = e.clientX+"px";
+    document.getElementById("bandicam").style.top = e.clientY+"px";
     document.getElementById("cursor").innerHTML = "Your cursor is at ("+x.toString()+","+y.toString()+")";
    }
   </script>
