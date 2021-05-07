@@ -1,0 +1,22 @@
+/* vt-netlify-theme by videotoaster for videotoaster
+   feel free to use if you want */
+
+@font-face {
+  font-family: "Share Tech Mono";
+  src: url("/stuff/ShareTechMono-Regular.ttf") format("ttf"),
+}
+
+:root {
+	--nc-font-sans: 'IBM Plex Mono', monospace;
+	--nc-font-mono: 'IBM Plex Mono', monospace;
+	--nc-tx-1: #FFFFFF;
+	--nc-tx-2: #EEEEEE;
+	--nc-bg-1: #000000;
+	--nc-bg-2: #002700;
+	--nc-bg-3: #005800;
+	--nc-lk-1: #00FF00;
+	--nc-lk-2: #00c200;
+	--nc-lk-tx: #000000;
+	--nc-ac-1: #00FF00;
+	--nc-ac-tx: #000000;
+}
