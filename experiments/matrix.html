@@ -7,6 +7,24 @@
   <title>Matrix client-ish</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
   <link rel="stylesheet" href="/vt-netlify-theme.css">
+  <script>
+    function login() {
+    var xhttp = new XMLHttpRequest();
+    var data = {
+       "type": "m.login.password",
+       "user": document.getElementById("username").value,
+       "password": document.getElementById("password").value
+    }
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var json = JSON.parse(this.responseText);
+        document.getElementById("console").value = "Access token: "+json.access_token;
+      }
+    };
+    xhttp.open("POST", document.getElementById("homeserver").value+"/_matrix/client/r0/login", true);
+    xhttp.send(JSON.stringify(data));
+   }
+  </script>
  </head>
  <body>
   <header>
@@ -19,10 +37,8 @@
    <tr><td>Homeserver</td><td><input style="width:100%" type="text" id="homeserv" placeholder="homeserver" value="https://matrix.org" /></td></tr>
    <tr><td>Ready?</td><td><button>Log into Matrix</button></td></tr>
   </table>
-  <textarea disabled="true" style="width:100%;resize:none;color:white;">
-This is a console.
-JavaScript events will be recorded here.
-Note that you can't type here, and this is not the message entry box.
+  <textarea id="console" disabled="true" style="width:100%;resize:none;color:white;">
+Press the login button to see stuff happen here
   </textarea>
   <table>
    <tr><td><input style="width:100%" type="text" id="msg" /></td><td><button>Send</button></td></tr>
