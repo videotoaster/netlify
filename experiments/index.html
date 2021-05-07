@@ -1,0 +1,42 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiments</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+  <link rel="stylesheet" href="/vt-netlify-theme.css">
+  <script>
+   function detectCase(char) {
+    if (char.length>1) {
+     console.error("detectCase only takes one character");
+    }
+    if (char.toLowerCase == char) { return false; }
+    if (char.toLowerCase == char) { return true;  }
+   }
+   function swoop() {
+    window.setInterval(function(){
+     for (var i=0; i<document.title.length; i++) {
+      if (detectCase(document.title[i]) == true) {
+       if (i==document.title.length) {
+        document.title[0] = document.title[0].toUppercase();
+        document.title[i] = document.title[i].toLowercase();
+       } else if (i==0) {
+        document.title[i] = document.title[i].toUppercase();
+       } else {
+        document.title[i] = document.title[i].toUppercase();
+        document.title[i-1] = document.title[i-1].toLowercase();
+       }
+      }
+     }
+    },100);
+   }
+ </head>
+ <body>
+  <header>
+   <h1>Experiments</h1>
+  </header>
+ </body>
+</html>
