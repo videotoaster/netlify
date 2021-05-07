@@ -2,13 +2,13 @@
    feel free to use if you want */
 
 @font-face {
-  font-family: "Share Tech Mono";
+  font-family: share-tech-mono;
   src: url("/fonts/ShareTechMono-Regular.ttf"), format("truetype");
 }
 
 :root {
-	--nc-font-sans: "Share Tech Mono", monospace;
-	--nc-font-mono: "Share Tech Mono", monospace;
+	--nc-font-sans: share-tech-mono, monospace;
+	--nc-font-mono: share-tech-mono, monospace;
 	--nc-tx-1: #FFFFFF;
 	--nc-tx-2: #EEEEEE;
 	--nc-bg-1: #000022;
