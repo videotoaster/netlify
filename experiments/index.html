@@ -7,35 +7,16 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
   <link rel="stylesheet" href="/vt-netlify-theme.css">
   <script>
-   function detectCase(char) {
-    if (char.length>1) {
-     console.error("detectCase only takes one character");
-    }
-    if (char.toLowerCase == char) { return false; }
-    if (char.toLowerCase == char) { return true;  }
-   }
-   function swoop() {
-    window.setInterval(function(){
-     for (var i=0; i<document.title.length; i++) {
-      if (detectCase(document.title[i]) == true) {
-       if (i==document.title.length) {
-        document.title[0] = document.title[0].toUppercase();
-        document.title[i] = document.title[i].toLowercase();
-       } else if (i==0) {
-        document.title[i] = document.title[i].toUppercase();
-       } else {
-        document.title[i] = document.title[i].toUppercase();
-        document.title[i-1] = document.title[i-1].toLowercase();
-       }
-      } else {
-       console.log(i);
-      }
-     }
-    },100);
+   function swoop(e) {
+    var x = e.clientX;
+    var y = e.clientY;
+    bandicam.style.x = e.clientX;
+    bandicam.style.y = e.clientY;
    }
   </script>
  </head>
- <body onload="swoop()">
+ <body onMouseMove="swoop(event)">
+  <span id="bandicam" style="position:absolute;width:16px;height:16px;font-size:0px;border-radius:100%;background-color:#ffff00aa;">&nbsp;</span>
   <header>
    <h1>Experiments</h1>
   </header>
