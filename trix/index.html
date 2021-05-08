@@ -7,9 +7,12 @@
   <body>
     <table style="height:100%;"><tr>
       <td><img src="trxlogo.svg" class="logo" /></td>
-      <td class="topalign maxwidth">
+      <td class="topalign maxwidth" style="padding-right: 10px;">
         <h1>Sign in</h1>
         <p>Homeserver: <input type="text" id="matrix_homeserv" value="https://matrix.org" placeholder="https://example.com" style="width:100%;" /></p>
+        <table>
+          <tr><td>Username: </td><td><input type="text" id="matrix_username" placeholder="Username" /></td></tr>
+          <tr><td>Password: </td><td><input type="password" id="matrix_password" placeholder="********" /></td></tr>
       </td>
     </tr></table>
   </body>
