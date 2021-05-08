@@ -1,5 +1,5 @@
 async function login(homeserv, username, password) {
-  var token = false;
+  var token = 255;
   
   // we need this thing because it does POST stuff
   var xhttp = new XMLHttpRequest();
@@ -28,6 +28,9 @@ async function login(homeserv, username, password) {
   // return false/access token
   return token;
 }
+function error(error) {
+  console.error(error);
+}
 async function main() {
   // get form data to log in
   var hs = document.getElementById("matrix_homeserv").value;
@@ -37,5 +40,8 @@ async function main() {
   // you know what this does
   var token = await login(hs,un,pw);
   
+  if (token = 255) { error("Invalid response recieved from homeserver."); }
+  if (token = 400) { error("Invalid request sent to homeserver."); }
+  if (token = 403) { error("Invalid username/password. Are you on the right homeserver?"); }
   console.log("Connected to "+hs+", token: "+token);
 }
