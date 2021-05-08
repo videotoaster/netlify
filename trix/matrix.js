@@ -35,8 +35,5 @@ function main() {
   var pw = document.getElementById("matrix_password").value;
   
   // you know what this does
-  var token = login(hs,un,pw);
-  
-  // be verbose
-  console.log("Connected to "+hs+", token: "+token);
+  var token = login(hs,un,pw) => console.log("Connected to "+hs+", token: "+token);
 }
