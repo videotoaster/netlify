@@ -9,15 +9,22 @@
   <link rel="stylesheet" href="/vt-netlify-theme.css">
   <script>
     var num = Math.floor(Math.random()*99999);
-    var str = "";
-         if (num<10) { str = "0000"+num.toString(); }
-    else if (num<100) { str = "000"+num.toString(); }
-    else if (num<1000) { str = "00"+num.toString(); }
-    else if (num<10000) { str = "0"+num.toString(); }
-       else              { str =    num.toString(); }
-    url="https://www.thiswaifudoesnotexist.net/example-"+str+".jpg"
+    var str = num.toString();
+    url="https://thisanimedoesnotexist.ai/results/psi-1.0/seed"+str+".png"
+    function generate_title() {
+      chunk1=["Boku no ","The ","ULTRA "];
+      chunk2=["Problems of ","BATTLE of ","Legend of ","Destruction of"];
+      chunk3=["Life and ","THE GALAXY and ","The Sorcerer's ","The Throne of "];
+      chunk4=["Death","OMEGA BATTLER","Black Magic","Mythology","The Exorcist"];
+      ch1 = chunk1[Math.floor(Math.random()*(chunk1.length-1))];
+      ch2 = chunk2[Math.floor(Math.random()*(chunk2.length-1))];
+      ch3 = chunk3[Math.floor(Math.random()*(chunk3.length-1))];
+      ch4 = chunk4[Math.floor(Math.random()*(chunk4.length-1))];
+      return ch1+ch2+ch3+ch4;
+    }
     function waifu() {
       document.getElementById("RANDOMWAIFU").src = url;
+      document.getElementById("RANDOMTITLE").innerHTML = generate_title();
     }
   </script>
  </head>
@@ -30,6 +37,9 @@
     <h1>One Waifu.</h1>
     <img height="256px" id="RANDOMWAIFU">
     <p>I made it just for you.</p>
+    <hr />
+    <h3>From the <i>nonexistant</i> anime:</h3>
+    <h1 id="RANDOMTITLE"></td>
   </div>
  </body>
 </html>
