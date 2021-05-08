@@ -37,9 +37,14 @@
      document.getElementById("keysmash").innerHTML = "Your fingers are now <font color=red id='keys'>on fire</font>"
     }
    }
+   function slickassrandomnumber() {
+    for (var i=0; i<200; i++) {
+     window.setTimeout(function(){document.getElementById("randotron").innerHTML=Math.floor(Math.random*1000);},1);
+    }
+   }
   </script>
  </head>
- <body onkeypress="keys()">
+ <body onkeypress="keys()" onload="slickassrandomnumber()">
   <header>
    <h1>Experiments</h1>
    <p id="cursor">Your cursor is at a position</p>
@@ -50,6 +55,7 @@
    <li><a href="get?key1=value1&key2=value2" onmouseover="mouseover(this)" onmouseout="mouseout(this)">get request</a></li>
   </ul>
   <p id="hover">You're hovering over <font color=cyan id="athing">the background</font></p>
+  <p id="hover">Your random number is <font color="cyan" id="randotron"></font></p>
   <p style="display:none;" id="keysmash">You've pressed <font color=cyan id="keys">0</font> keys</p>
  </body>
 </html>
