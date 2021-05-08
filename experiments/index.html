@@ -12,15 +12,24 @@
     var y = e.clientY;
     document.getElementById("cursor").innerHTML = "Your cursor is at ("+x.toString()+","+y.toString()+")";
    }
+   function mouseover(object) {
+    document.getElementById("hover").style = "display:block;"
+    document.getElementById("athing").innerHTML = object.innerText;
+   }
+   function mouseout(object) {
+    document.getElementById("hover").style = "display:none;"
+    document.getElementById("athing").innerHTML = "a thing";
+   }
   </script>
  </head>
  <body>
   <header>
    <h1>Experiments</h1>
    <p id="cursor">Your cursor is at a position</p>
+   <p style="display:none" id="hover">You're hovering over <font color=cyan id="athing">a thing</font></p>
   </header>
   <ul>
-   <li><a href="matrix">matrix client</a></li>
+   <li><a href="matrix" onmouseover="mouseover(this)" onmouseout="mouseout(this)">matrix client</a></li>
    <li><a href="log">table log</a></li>
    <li><a href="get?key1=value1&key2=value2">get request</a></li>
   </ul>
