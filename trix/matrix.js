@@ -14,7 +14,7 @@ function login(homeserv, username, password) {
     if (this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
       var token = json.access_token;
-      console.log("Connected to "+homeserv+", token: "+token);
+      
     } else {
       // it's probably an error, return false
       token = false;
@@ -36,4 +36,7 @@ function main() {
   
   // you know what this does
   var token = login(hs,un,pw);
+  
+  // be verbose
+  console.log("Connected to "+hs+", token: "+token);
 }
