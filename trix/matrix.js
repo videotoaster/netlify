@@ -29,6 +29,5 @@ function main() {
   var hs = document.getElementById("matrix_homeserv").value;
   var un = document.getElementById("matrix_username").value;
   var pw = document.getElementById("matrix_password").value;
-  // log in
   var token = login(hs,un,pw);
 }
