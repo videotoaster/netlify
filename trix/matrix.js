@@ -1,4 +1,4 @@
-function login(homeserv, username, password) {
+async function login(homeserv, username, password) {
   // we need this thing because it does POST stuff
   var xhttp = new XMLHttpRequest();
   
@@ -35,5 +35,7 @@ function main() {
   var pw = document.getElementById("matrix_password").value;
   
   // you know what this does
-  var token = login(hs,un,pw) => console.log("Connected to "+hs+", token: "+token);
+  await var token = login(hs,un,pw);
+  
+  console.log("Connected to "+hs+", token: "+token);
 }
