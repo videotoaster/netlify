@@ -19,7 +19,7 @@
    function mouseout(object) {
     document.getElementById("athing").innerHTML = "the background";
    }
-   function keys() {
+   function keys(e) {
     keysmash++;
     document.getElementById("keys").innerHTML = keysmash;
     document.getElementById("keysmash").style.display = "block";
@@ -39,12 +39,12 @@
    }
    function slickassrandomnumber() {
     for (var i=0; i<200; i++) {
-     window.setTimeout(function(){document.getElementById("randotron").innerHTML=Math.floor(Math.random()*1000);},10*i);
+     window.setTimeout(function(){document.getElementById("randotron").innerHTML=Math.floor(Math.random()*1000);},10*i+(i*2/255));
     }
    }
   </script>
  </head>
- <body onkeypress="keys()" onload="slickassrandomnumber()">
+ <body onkeypress="keys(event)" onload="slickassrandomnumber()">
   <header>
    <h1>Experiments</h1>
    <p id="cursor">Your cursor is at a position</p>
