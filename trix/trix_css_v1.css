@@ -10,12 +10,12 @@ body {
 }
 
 .container {
-	width: 30rem;
-	height: 20rem;
-	box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);	
+	width: 45%;
+	height: 35%;
+	box-shadow: 0 0 1rem 0 lime;	
 	border-radius: 5px;
 	position: relative;
 	z-index: 1;
-	background: #ddddddcc;
+	background: background;
 	overflow: hidden;
 }
