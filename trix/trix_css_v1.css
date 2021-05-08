@@ -49,3 +49,19 @@ input[type=password]:focus {
    color: black;
    background: white;
 }
+button {
+   padding: 5px;
+   background: white;
+   color: black;
+   font-family: 'Verdana', sans-serif;
+}
+a {
+   color: white;
+   text-decoration: none;
+}
+a:hover {
+   text-decoration: underline;
+}
+.alignright {
+   text-align: right;
+}
