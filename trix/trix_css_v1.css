@@ -12,3 +12,7 @@ body {
    padding: 10px;
    border-radius: 3px;
 }
+.logo {
+   height: 96px;
+   margin-right: 10px;
+}
