@@ -16,6 +16,8 @@ async function login(homeserv, username, password) {
     if (this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
       token = json.access_token; 
+    } else {
+      token = this.status;
     }
   };
   
