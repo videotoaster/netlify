@@ -23,6 +23,18 @@
     keysmash++;
     document.getElementById("keys").innerHTML = keysmash;
     document.getElementById("keysmash").style.display = "block";
+    if (keysmash == 50) {
+     keys.color = lime;
+    }
+    if (keysmash == 100) {
+     keys.color = yellow;
+    }
+    if (keysmash == 150) {
+     keys.color = orange;
+    }
+    if (keysmash == 50) {
+     keys.color = red;
+    }
    }
   </script>
  </head>
