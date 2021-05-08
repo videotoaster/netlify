@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
   <link rel="stylesheet" href="/vt-netlify-theme.css">
   <script>
+   var keysmash = 0;
    function swoop(e) {
     var x = e.clientX;
     var y = e.clientY;
@@ -18,9 +19,14 @@
    function mouseout(object) {
     document.getElementById("athing").innerHTML = "the background";
    }
+   function keys() {
+    keysmash++;
+    document.getElementById("keys").innerHTML = keysmash;
+    document.getElementById("keysmash").style.display = "block";
+   }
   </script>
  </head>
- <body>
+ <body onkeypress="keys()">
   <header>
    <h1>Experiments</h1>
    <p id="cursor">Your cursor is at a position</p>
@@ -31,5 +37,6 @@
    <li><a href="get?key1=value1&key2=value2" onmouseover="mouseover(this)" onmouseout="mouseout(this)">get request</a></li>
   </ul>
   <p id="hover">You're hovering over <font color=cyan id="athing">the background</font></p>
+  <p style="display:none;" id="keysmash">You've pressed <font color=cyan id="keys">0</font> keys</p>
  </body>
 </html>
