@@ -1,5 +1,5 @@
 async function login(homeserv, username, password) {
-  var token = "255";
+  var token = "0";
   
   // we need this thing because it does POST stuff
   var xhttp = new XMLHttpRequest();
@@ -15,7 +15,7 @@ async function login(homeserv, username, password) {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
-      token = json.access_token; 
+      token = json.access_token.toString(); 
     } else {
       token = this.status.toString();
     }
