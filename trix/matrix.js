@@ -41,7 +41,7 @@ async function main() {
   var pw = document.getElementById("matrix_password").value;
   
   // you know what this does
-  var token = await login(hs,un,pw);
+  const token = await login(hs,un,pw);
   
   // add errors n stuff
   if (token == 255) { error("Apparently, no response recieved from homeserver."); }
