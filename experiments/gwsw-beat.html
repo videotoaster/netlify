@@ -1,0 +1,430 @@
+<!doctype html>
+<html>
+<head>
+<title>Rhythm Practice</title>
+
+</head>
+<body onload="init()">
+
+<canvas id="canvas" width="1" height="1"></canvas>
+
+
+<script>
+
+const avg_bangs          = 10;
+const max_bangs          = 30;
+const bang_limit         = 0.2;
+const shortest_bang      = 120;
+const max_offby          = 40;
+const bang_light_dur     = 60;
+const bang_light_color   = "#2040ff";
+const black_color        = "#000000";
+const white_color        = "#ffffff";
+const pause_color        = "#707070";
+const bad_color          = "#ff0000";
+const major_grid_color   = "#989898"
+const minor_grid_color   = "#707070"
+const sheader_h          = 60;
+
+var audioContext = null;
+var reset_time = now();
+var public_panel = null;
+var paused = false;
+var bangs = null;
+
+class Bangs {
+constructor() {
+    this.bangs = [];
+    this.clear();
+}
+clear() {
+    this.bangs.length = 0;
+    this.latest_bang = 0;
+    this.beat_ms = 0;
+}
+count() {
+    return this.bangs.length;
+}
+most_recent() {
+    return this.latest_bang;
+}
+bpm() {
+    if (this.beat_ms == 0) return 0;
+    let b = 60*1000 / this.beat_ms;
+    b = Math.floor(10*b) / 10;
+    return b;
+}
+info(i) {
+    return (i == 0 || i >= this.bangs.length) ? null : this.bangs[i];
+}
+add(bang_tm) {
+    let last_bang = (this.bangs.length > 0) ? this.bangs[this.bangs.length-1].time : reset_time;
+    if (bang_tm - last_bang < shortest_bang) return;
+    this.latest_bang = bang_tm;
+
+    let mult = 0;
+    let offby;
+    let delta = (this.bangs.length == 0) ? 0 : bang_tm - this.bangs[this.bangs.length-1].time;
+    let tot = 0;
+    let count = 0;
+    let mini = this.bangs.length - avg_bangs;
+    for (let i = this.bangs.length-1; i > 0 && i >= mini; --i) {
+        if (this.bangs[i].bad || this.bangs[i-1].bad) continue;
+        tot += (this.bangs[i].time - this.bangs[i-1].time) * this.bangs[i].mult;
+        ++count;
+    }
+    if (count == 0) {
+        mult = 1;
+        offby = 0;
+    } else {
+        this.beat_ms = tot / count;
+        let mults = [ 1, .5, .25, 2, 3, 4 ];
+        for (let m = 0; m < mults.length; ++m) {
+            let diff = delta - (this.beat_ms * mults[m]);
+            if (Math.abs(diff) < this.beat_ms/12) {
+                mult = mults[m];
+                offby = diff;
+                break;
+            }
+        }
+        if (mult > 1) {
+            let tm = this.bangs[this.bangs.length-1].time;
+            for (let i = 0; i < mult-1; ++i) {
+                tm += delta/mult;
+                this.push_info(tm, 1, 0, true);
+            }
+            mult = 1;
+            offby = (bang_tm - tm) - this.beat_ms;
+        }
+        if (mult == 0) { // he's way off
+            mult = 1;
+            offby = delta - this.beat_ms;
+        }
+    }
+    this.push_info(bang_tm, 1/mult, offby, false);
+    if (this.bangs.length > max_bangs)
+        this.bangs.splice(0, this.bangs.length - max_bangs);
+}
+push_info(tm, mult, offby, fake) {
+    let frac = offby / max_offby;
+    let bad = false;
+    if (frac > 1) {
+        frac = 1;
+        bad = true;
+    }
+    if (frac < -1) {
+        frac = -1;
+        bad = true;
+    }
+    this.bangs.push({ time:tm, mult:mult, offby:offby, frac:frac, fake:fake, bad:bad });
+}
+}; // class Bangs
+
+function init() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Sorry, your browser does not support getUserMedia");
+        return;
+    }
+    let canvas = canvas_resize();
+    canvas.addEventListener('mousedown', canvas_mousepress, false);
+    window.addEventListener('resize', canvas_resize, false);
+    bangs = new Bangs();
+    draw();
+}
+
+function canvas_resize() {
+    let canvas = document.getElementById("canvas");
+    canvas.width = window.innerWidth -20;
+    canvas.height = window.innerHeight -20;
+    return canvas;
+}
+
+function canvas_mousepress(e) {
+    if (audioContext == null)
+        setup_audio();
+    reset();
+    let p = client_pos(e);
+    if (public_panel != null && in_obj_rect(p.x, p.y, public_panel))
+        toggle_pause();
+    draw();
+}
+
+function client_pos(event) {
+    var r = document.getElementById("canvas").getBoundingClientRect();
+    return { x: event.clientX - r.left, y: event.clientY - r.top };
+}
+
+async function setup_audio() {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioContext = new AudioContext();
+    audioContext.resume();
+    let dev = await navigator.mediaDevices.getUserMedia({audio:true});
+    if (dev == null || dev.deviceId == '') {
+        const devs = await navigator.mediaDevices.enumerateDevices();
+        let devid = null;
+        for (let i = 0; i < devs.length; ++i) {
+            if (devs[i].kind == 'audioinput') {
+                devid = devs[i].deviceId;
+                break;
+            }
+        }
+        if (devid == null) {
+            alert("No microphone found.");
+            return;
+        }
+        dev = await navigator.mediaDevices.getUserMedia({audio:{deviceId:{exact:devid}}});
+    }
+    let source = audioContext.createMediaStreamSource(dev);
+    let proc_node = audioContext.createScriptProcessor(256, 1, 1);
+    proc_node.onaudioprocess = process_audio;
+    proc_node.connect(audioContext.destination);
+    source.connect(proc_node);
+}
+
+function reset() {
+    reset_time = now();
+    bangs.clear();
+}
+
+function toggle_pause() {
+    paused = !paused;
+    if (paused) {
+        audioContext.suspend();
+    } else {
+        audioContext.resume();
+    }
+}
+
+function draw() {
+    let ctx = get_ctx();
+    let cw = ctx.canvas.width;
+    let ch = ctx.canvas.height;
+    ctx.clearRect(0, 0, cw, ch);
+    draw_rect(ctx, 0, 0, cw, ch, black_color);
+    if (audioContext == null) {
+        // Chrome requires user click before new AudioContext.
+        draw_center_paragraph(ctx, ["Click to begin."], 0, ch/8, cw, white_color, ch/12, "Arial");
+    } else if (cw < ch) {
+        draw_center_paragraph(ctx, ["Hold phone","sideways."], 0, ch/8, cw, white_color, ch/12, "Arial");
+    } else {
+        draw_ui(ctx, cw, ch);
+    }
+    window.requestAnimationFrame(draw);
+}
+
+function draw_ui(ctx, cw, ch) {
+    let xmargin = Math.floor(cw / 40);
+    let ybmargin = Math.floor(ch / 40);
+    let ytmargin = ybmargin;
+    let font_size = Math.floor(ch/6);
+    let csh2 = Math.floor(ch/50); // center strip
+    let m = measure_text(ctx, "888.8a", font_size, "Arial");
+    let panelw = m.width;
+    public_panel = { x:cw-panelw, y:ytmargin, w:panelw, h:ch-ytmargin-ybmargin };
+
+    let staffh = ch * 0.35;
+    let gw = cw - panelw - 2*xmargin;
+    let xstep = gw / (max_bangs-1);
+    let bw = 8;
+    let noter = xstep * .35;
+    let notey = staffh - 3*noter;
+    let midy = staffh + (ch-staffh)/2;
+    let maxv = ch - midy - ybmargin;
+
+    let bpm = bangs.bpm().toString();
+    if (bpm.indexOf('.') < 0) bpm += '.0';
+    m = measure_text(ctx, bpm, font_size);
+    let x = cw-xmargin;
+    let y = (notey+m.height)/2; 
+    draw_text(ctx, bpm, x-m.width, y, white_color);
+    x = x-panelw/2;
+    y = midy-maxv*.7;
+    if (paused) {
+        draw_paused(ctx, x, y, font_size*1.2);
+    } else {
+        draw_bang_light(ctx, x, y, font_size*.6);
+    }
+    draw_grid(ctx, xmargin, midy, 0, csh2, 0, maxv/4, gw, 0);
+
+    if (bangs.count() > 1) {
+        let info = bangs.info(bangs.count()-1);
+        let offby = Math.floor(info.offby).toString();
+        if (offby.substr(0,1) != '-') offby = '+' + offby;
+        let m = measure_text(ctx, offby, font_size*.8, "monospace");
+        draw_text(ctx, offby, cw-m.width-panelw*.15, midy+m.height/2, bang_color(info.frac));
+    }
+    x = xmargin;
+    for (let i = 1; i < bangs.count(); ++i, x += xstep) {
+        let info = bangs.info(i);
+        let color = bang_color(info.frac);
+        let bh = maxv * info.frac;
+        if (bh < 0) {
+            draw_rect(ctx, x, midy+bh-csh2, bw, -bh, color);
+        } else {
+            draw_rect(ctx, x, midy+csh2, bw, bh, color);
+        }
+        draw_note(ctx, x+bw/2, notey, noter, ytmargin, color, xstep, info.mult, info.bad, info.fake);
+    }
+}
+function draw_note(ctx, x, y, r, ytmargin, color, xstep, mult, bad, fake) {
+    let sw = r/2;
+    let sh = y - ytmargin;
+    draw_rect(ctx, x+r-sw, ytmargin, sw, sh, color);
+    draw_circle(ctx, x, y, r, color);
+    if (fake) draw_circle(ctx, x, y, r*.7, black_color);
+    if (bad) draw_cross(ctx, x, y, r, black_color);
+    let rx = x+r-xstep;
+    let ry = ytmargin;
+    let rh = (y-r-ytmargin)/8;
+    let bars = (mult == 2) ? 2 : (mult == 4) ? 3 : 1;
+    for (let i = 0; i < bars; ++i) {
+        draw_rect(ctx, rx+1, ry, xstep-1, rh, color);
+        ry += rh * 1.75;
+    }
+}
+function draw_cross(ctx, x, y, r, color) {
+    let s = r * Math.sqrt(2);
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.moveTo(x-s, y-s);
+    ctx.lineTo(x+s, y+s);
+    ctx.moveTo(x+s, y-s);
+    ctx.lineTo(x-s, y+s);
+    ctx.stroke();
+}
+function draw_grid(ctx,x,y,xi,yi,dxi,dyi,gw,gh) {
+    draw_rect(ctx, x+xi, y+yi, gw?gw:1, gh?gh:1, major_grid_color);
+    draw_rect(ctx, x-xi, y-yi, gw?gw:1, gh?gh:1, major_grid_color);
+    ctx.beginPath();
+    ctx.setLineDash([10,4]);
+    ctx.strokeStyle = minor_grid_color;
+    for (let i = 1; i < 4; ++i) {
+        xi += dxi;
+        yi += dyi;
+        ctx.moveTo(x+xi, y+yi);
+        ctx.lineTo(x+xi+gw, y+yi+gh);
+        ctx.stroke();
+        ctx.moveTo(x-xi, y-yi);
+        ctx.lineTo(x-xi+gw, y-yi+gh);
+        ctx.stroke();
+    }
+    ctx.setLineDash([]);
+}
+
+function draw_bang_light(ctx, x, y, r) {
+    if (now() - bangs.most_recent() > bang_light_dur) return;
+    draw_circle(ctx, x, y, r, white_color);
+    draw_circle(ctx, x, y, r*.9, bang_light_color);
+}
+
+function draw_paused(ctx, x, y, ph) {
+    let pw = ph/4;
+    let r = ph*.75;
+    let sp2 = pw*.15;
+    draw_circle(ctx, x, y, r, pause_color);
+    draw_circle(ctx, x, y, r*.9, black_color);
+    draw_rect(ctx, x-pw-sp2, y-ph/2, pw, ph, pause_color);
+    draw_rect(ctx, x+sp2, y-ph/2, pw, ph, pause_color);
+}
+
+function bang_color(frac) {
+    frac = Math.abs(frac);
+    let c = (frac < .5) ?
+        fade({r:0,g:255,b:0}, {r:255,g:255,b:0}, 2*frac) :
+        fade({r:255,g:255,b:0}, {r:255,g:0,b:0}, 2*frac-1);
+    return mkcolor(c);
+}
+
+function process_audio(e) {
+    let tm = now();
+    let input = e.inputBuffer;
+    for (let c = 0; c < input.numberOfChannels; ++c) {
+        let samp = input.getChannelData(c);
+        let bang_tm = bang_time(samp, tm);
+        if (bang_tm > 0) bangs.add(bang_tm);
+    }
+}
+
+function bang_time(samp, tm) {
+    const samples_per_sec = 44100;
+    const samples_per_ms = samples_per_sec / 1000;
+    for (let b = 0; b < samp.length; b++)
+        if (samp[b] > bang_limit)
+            return tm - (samp.length - b) / samples_per_ms;
+    return 0;
+}
+
+function get_ctx() {
+    var canvas = document.getElementById("canvas");
+    return canvas.getContext("2d");
+}
+
+function mkcolor(color) {
+    var rx = ("0"+color.r.toString(16)).substr(-2);
+    var gx = ("0"+color.g.toString(16)).substr(-2);
+    var bx = ("0"+color.b.toString(16)).substr(-2);
+    return "#"+rx+gx+bx;
+}
+
+function fade(color1, color2, frac) {
+    return {
+        r: color1.r + Math.floor((color2.r - color1.r) * frac),
+        g: color1.g + Math.floor((color2.g - color1.g) * frac),
+        b: color1.b + Math.floor((color2.b - color1.b) * frac) };
+}
+
+function draw_rect(ctx, x, y, w, h, color) {
+    if (color != undefined) ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+}
+
+function draw_text(ctx, text, x, y, color, fontsize, fontname) {
+    set_font(ctx, fontsize, fontname);
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y); //FIXME y baseline weirdness
+}
+
+function draw_center_paragraph(ctx, texts, x, y, w, color, font_size, font_name) {
+    for (let i = 0; i < texts.length; ++i) {
+        let text = texts[i];
+        let m = measure_text(ctx, text, font_size, font_name);
+        draw_text(ctx, text, x+(w-m.width)/2, y, color);
+        y += m.height + 6;
+    }
+}
+
+function draw_circle(ctx, x, y, r, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, r, 0, 2*Math.PI);
+    ctx.fill();
+}
+
+function measure_text(ctx, str, fontsize, fontname) {
+    set_font(ctx, fontsize, fontname);
+    var m = ctx.measureText(str);
+    return { width: m.width, height: fontsize*.9 }; // FIXME
+}
+
+function set_font(ctx, fontsize, fontname) {
+    if (fontsize == undefined || fontsize == 0) return;
+    if (fontname == undefined || fontname == '') fontname = 'sans-serif';
+    ctx.font = fontsize.toString()+'px '+fontname;
+}
+
+function in_obj_rect(x, y, obj) {
+    return in_rect(x, y, obj.x, obj.y, obj.w, obj.h);
+}
+
+function in_rect(x, y, rx, ry, rw, rh) {
+    return (x >= rx && x < rx+rw && y >= ry && y < ry+rh);
+}
+
+function now() {
+    return performance.now();
+    //return (new Date()).getTime();
+}
+</script>
+
+</body>
+</html>
