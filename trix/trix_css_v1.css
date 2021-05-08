@@ -1,5 +1,5 @@
 body {
-	background: url(trix-bg.png) no-repeat;
+	background: #1a1a1a;
 	/* Keep the inherited background full size. */
 	background-attachment: fixed; 
 	background-size: cover;
@@ -16,20 +16,6 @@ body {
 	border-radius: 5px;
 	position: relative;
 	z-index: 1;
-	background: inherit;
+	background: #ddddddcc;
 	overflow: hidden;
-}
-
-.container:before {
-	content: "";
-	position: absolute;
-	background: inherit;
-	z-index: -1;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-	filter: blur(10px);
-	margin: -20px;
 }
