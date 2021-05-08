@@ -52,6 +52,7 @@ input[type=password]:focus {
 button {
    padding: 5px;
    background: black;
+   margin: 5px;
    color: white;
    font-family: 'Verdana', sans-serif;
    border: 2px solid white;
