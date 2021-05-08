@@ -1,9 +1,12 @@
 html {
    background: #2a2a2a;
    color: white;
+   font-family: 'Verdana', sans-serif;
 }
 body {
    background: #000000;
+   width: 50%;
+   margin: auto;
    margin-top: 15%;
    height: 25%;
 }
