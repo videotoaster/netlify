@@ -10,8 +10,6 @@
    function swoop(e) {
     var x = e.clientX;
     var y = e.clientY;
-    document.getElementById("bandicam").style.left = x;
-    document.getElementById("bandicam").style.top = y;
     document.getElementById("cursor").innerHTML = "Your cursor is at ("+x.toString()+","+y.toString()+")";
    }
   </script>
@@ -21,6 +19,10 @@
    <h1>Experiments</h1>
    <p id="cursor">Your cursor is at a position</p>
   </header>
-  <span id="bandicam" style="position:relative;width:48px;height:48px;font-size:0px;border-radius:100%;background-color:#ffff00aa;">&nbsp;</span>
+  <ul>
+   <li><a href="matrix">matrix client</a></li>
+   <li><a href="log">table log</a></li>
+   <li><a href="get?key1=value1&key2=value2">get request</a></li>
+  </ul>
  </body>
 </html>
