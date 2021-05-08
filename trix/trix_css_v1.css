@@ -9,4 +9,6 @@ body {
    margin: auto;
    margin-top: 15%;
    height: 25%;
+   padding: 10px;
+   border-radius: 3px;
 }
