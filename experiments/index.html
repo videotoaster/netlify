@@ -13,12 +13,10 @@
     document.getElementById("cursor").innerHTML = "Your cursor is at ("+x.toString()+","+y.toString()+")";
    }
    function mouseover(object) {
-    document.getElementById("hover").style = "display:block;"
     document.getElementById("athing").innerHTML = object.innerText;
    }
    function mouseout(object) {
-    document.getElementById("hover").style = "display:none;"
-    document.getElementById("athing").innerHTML = "a thing";
+    document.getElementById("athing").innerHTML = "the background";
    }
   </script>
  </head>
@@ -32,6 +30,6 @@
    <li><a href="log" onmouseover="mouseover(this)" onmouseout="mouseout(this)">table log</a></li>
    <li><a href="get?key1=value1&key2=value2" onmouseover="mouseover(this)" onmouseout="mouseout(this)">get request</a></li>
   </ul>
-  <p style="display:none" id="hover">You're hovering over <font color=cyan id="athing">a thing</font></p>
+  <p id="hover">You're hovering over <font color=cyan id="athing">the background</font></p>
  </body>
 </html>
