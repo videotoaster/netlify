@@ -1,21 +1,9 @@
-body {
-	background: #1a1a1a;
-	/* Keep the inherited background full size. */
-	background-attachment: fixed; 
-	background-size: cover;
-	display: grid;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
+html {
+   background: #2a2a2a;
+   color: white;
 }
-
-.container {
-	width: 45%;
-	height: 35%;
-	box-shadow: 0 0 1rem 0 lime;	
-	border-radius: 5px;
-	position: relative;
-	z-index: 1;
-	background: background;
-	overflow: hidden;
+body {
+   background: #000000;
+   margin-top: 15%;
+   height: 25%;
 }
