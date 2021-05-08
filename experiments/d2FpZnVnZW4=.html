@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en" onMouseMove="swoop(event)">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For your efforts...</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+  <link rel="stylesheet" href="/vt-netlify-theme.css">
+  <script>
+    var num = Math.floor(Math.random()*99999);
+    var str = "";
+         if (num<10) { str = "0000"+num.toString(); }
+    else if (num<100) { str = "000"+num.toString(); }
+    else if (num<1000) { str = "00"+num.toString(); }
+    else if (num<10000) { str = "0"+num.toString(); }
+       else              { str =    num.toString(); }
+    url="https://www.thiswaifudoesnotexist.net/example-"+str+".jpg"
+    function waifu() {
+      document.getElementById("RANDOMWAIFU").src = url;
+    }
+  </script>
+ </head>
+ <body onload="waifu()">
+  <header>
+   <h1>Great work!</h1>
+   <p>For your efforts...</p>
+  </header>
+  <div style="text-align: center;">
+    <h1>One Waifu.</h1>
+    <img src="RANDOM" id="RANDOMWAIFU">
+    <p>I made it just for you.</p>
+  </div>
+ </body>
+</html>
