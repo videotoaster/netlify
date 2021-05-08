@@ -22,12 +22,15 @@ h1, h2, h3, h4, h5, h6, p {
 .topalign {
    vertical-align: top;
 }
+.maxwidth {
+   width: 100%;
+}
 input[type=text] {
    border: 2px solid white;
    color: white;
    background: black;
    font-family: monospace;
-   transition: 0.1s;
+   transition: 0.25s;
 }
 input[type=text]:focus {
    border: 2px solid white;
