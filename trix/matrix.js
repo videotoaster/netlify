@@ -35,7 +35,7 @@ function main() {
   var pw = document.getElementById("matrix_password").value;
   
   // you know what this does
-  await var token = login(hs,un,pw);
+  var token = await login(hs,un,pw);
   
   console.log("Connected to "+hs+", token: "+token);
 }
