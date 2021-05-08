@@ -32,8 +32,9 @@
     if (keysmash == 150) {
      document.getElementById("keys").color = "orange";
     }
-    if (keysmash == 200) {
+    if (keysmash > 200) {
      document.getElementById("keys").color = "red";
+     document.getElementById("keysmash").innerHTML = "Your fingers are now <font color=red id='keys'>on fire</font>"
     }
    }
   </script>
