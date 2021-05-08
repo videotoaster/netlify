@@ -28,7 +28,7 @@ async function login(homeserv, username, password) {
   // return false/access token
   return token;
 }
-function main() {
+async function main() {
   // get form data to log in
   var hs = document.getElementById("matrix_homeserv").value;
   var un = document.getElementById("matrix_username").value;
