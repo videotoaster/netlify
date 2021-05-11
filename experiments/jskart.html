@@ -1,3 +1,17 @@
-<canvas height="100%" width="100%" id="a-la-kart">
-  Your browser doesn't work
-</canvas>
+<!DOCTYPE html>
+<html>
+ <head>
+  <script>
+   var c = document.getElementById("a-la-kart");
+   var ctx = c.getContext("2d");
+   ctx.beginPath();
+   ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+   ctx.stroke();
+  </script>
+ </head>
+ <body style="margin: 0px;">
+  <canvas style="display: block; height: 100%;" id="a-la-kart">
+   Your browser doesn't work
+  </canvas>
+ </body>
+</html>
