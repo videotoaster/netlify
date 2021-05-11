@@ -7,12 +7,13 @@
     padding: 0 !important;
    }
   </style>
+  <script src="//video.catvibers.me/mediacanvas.js"></script>
   <script>
    function main() {
     var c = document.getElementById("a-la-kart");
-    c.width = window.innerWidth;
-    c.height = window.innerHeight;
     var ctx = c.getContext("2d");
+    
+    window.setInterval(mediacanvas_fullscreen(c),10);
     
     ctx.beginPath();
     ctx.arc(95, 50, 40, 0, 2 * Math.PI);
