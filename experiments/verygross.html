@@ -67,14 +67,13 @@
    </script>
  </head>
  <body>
-  <button class="alert">uh oh</button><br />
-  <button class="success">yay</button><br />
-  <button class="error">crap</button><br />
-  <button class="info">hey!</button><br />
-  <button>hi.</button>
-  <hr>
-  <button onclick="init();">Style... with JS.</button>
-  <h1>This is terrible practice.</h1>
-  <p>For the love of GOD just use CSS :hover</p>
+  <table>
+   <tr><td>Orange</td><td><button class="alert">alert</button></td></tr>
+   <tr><td>Green</td><td><button class="success">success</button></td></tr>
+   <tr><td>Red</td><td><button class="error">error</button></td></tr>
+   <tr><td>Blue</td><td><button class="info">info</button></td></tr>
+   <tr><td>Gray</td><td><button>[no class]</button></td></tr>
+  </table>
+  <button onclick="init();"><code>init();</code> - style these buttons</button>
  </body>
 </html>
