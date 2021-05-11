@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
  <head>
+  <style>
+   html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+   }
+  </style>
   <script>
    function main() {
     var c = document.getElementById("a-la-kart");
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
     var ctx = c.getContext("2d");
+    
     ctx.beginPath();
     ctx.arc(95, 50, 40, 0, 2 * Math.PI);
     ctx.stroke();
