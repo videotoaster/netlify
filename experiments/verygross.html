@@ -75,5 +75,90 @@
    <tr><td>Gray</td><td><button>[no class]</button></td></tr>
   </table>
   <button onclick="init();"><code>init();</code> - style these buttons</button>
+  <h2>WARNING!</h2>
+  <p>this is an awful method of applying colors on hover.</p>
+  <p>PLEASE, DO NOT do this. Use CSS's :hover style for this.</p>
+  <p>What took around 64 lines of code to do here can take... around 30. Tops.</p>
+  <p>But I'll let you be the judge of that:</p>
+  <details>
+   <summary>JS hover styling</summary>
+   <pre>
+     function rollover(obj) {
+       switch (obj.className) {
+         case "alert":
+           obj.style.background = "brown";
+           obj.style.color = "white";
+           break;
+         case "success":
+           obj.style.background = "green";
+           obj.style.color = "white";
+           break;
+         case "error":
+           obj.style.background = "maroon";
+           obj.style.color = "white";
+           break;
+         case "info":
+           obj.style.background = "navy";
+           obj.style.color = "white";
+           break;
+         default:
+           obj.style.background = "#444";
+           obj.style.color = "white";
+           break;
+       }
+     }
+     function rolloff(obj) {
+       switch (obj.className) {
+         case "alert":
+           obj.style.background = "orange";
+           obj.style.color = "black";
+           break;
+         case "success":
+           obj.style.background = "lime";
+           obj.style.color = "black";
+           break;
+         case "error":
+           obj.style.background = "red";
+           obj.style.color = "white";
+           break;
+         case "info":
+           obj.style.background = "blue";
+           obj.style.color = "white";
+           break;
+         default:
+           obj.style.background = "gray";
+           obj.style.color = "black";
+           break;
+       }
+     }
+     function init() {
+       var buttons = document.getElementsByTagName("button");
+       for (var i=0; i<buttons.length; i++) {
+         buttons[i].onmouseenter = function () {
+           rollover(this);
+         };
+         buttons[i].onmouseleave = function () {
+           rolloff(this);
+         };
+         buttons[i].style = "border-radius: 5px; border: none; color: black; background: gray; padding: 4px;";
+         rolloff(buttons[i]);
+       }
+     }</pre>
+  </details>
+  <details>
+   <summary>CSS hover styling</summary>
+   <pre>
+     button { border-radius: 5px; border: none; color: black; background: gray; padding: 4px; }
+     button:hover { background: #444; color: white; }
+     button.alert { background: orange; color: black; }
+     button.alert:hover { background: brown; color: white; }
+     button.success { background: lime; color: white; }
+     button.success:hover { background: green; color: white; }
+     button.error { background: red; color: white; }
+     button.error:hover { background: maroon; color: white; }
+     button.info { background: blue; color: white; }
+     button.info:hover { background: navy; color: white; }
+   </pre>
+  </details>
  </body>
 </html>
