@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>BAD</title>
+   <script>
+     function rollover(obj) {
+       switch (obj.className) {
+         case "alert":
+           obj.style.background = "brown";
+           obj.style.color = "white";
+           break;
+         case "success":
+           obj.style.background = "green";
+           obj.style.color = "white";
+           break;
+         case "error":
+           obj.style.background = "maroon";
+           obj.style.color = "white";
+           break;
+         case "info":
+           obj.style.background = "navy";
+           obj.style.color = "white";
+           break;
+         default:
+           obj.style.background = "#444";
+           obj.style.color = "white";
+           break;
+       }
+     }
+     function rolloff(obj) {
+       switch (obj.className) {
+         case "alert":
+           obj.style.background = "orange";
+           obj.style.color = "black";
+           break;
+         case "success":
+           obj.style.background = "lime";
+           obj.style.color = "black";
+           break;
+         case "error":
+           obj.style.background = "red";
+           obj.style.color = "white";
+           break;
+         case "info":
+           obj.style.background = "blue";
+           obj.style.color = "white";
+           break;
+         default:
+           obj.style.background = "gray";
+           obj.style.color = "black";
+           break;
+       }
+     }
+     function init() {
+       var buttons = document.getElementsByTagName("button");
+       for (var i=0; i<buttons.length; i++) {
+         buttons[i].onmouseenter = function () {
+           rollover(this);
+         };
+         buttons[i].onmouseexit = function () {
+           rolloff(this);
+         };
+         buttons[i].style = "border-radius: 5px; border: none; color: black; background: gray; padding: 4px;";
+         rolloff(buttons[i]);
+       }
+     }
+   </script>
+ </head>
+ <body>
+  <button class="alert">bad awful</button><br />
+  <button class="success">bad awful</button><br />
+  <button class="error">bad awful</button><br />
+  <button class="info">bad awful</button><br />
+  <button>bad awful</button>
+ </body>
+</html>
