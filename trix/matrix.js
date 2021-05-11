@@ -1,7 +1,7 @@
 /* I'm taking a break. */
 
 async function login(homeserv, username, password) {
-  var token = "0";
+  var token = "255";
   
   // we need this thing because it does POST stuff
   var xhttp = new XMLHttpRequest();
@@ -23,7 +23,7 @@ async function login(homeserv, username, password) {
     }
   };
   
-  // send HTTP request
+  // send HTTP request and get login token
   xhttp.open("POST", document.getElementById("matrix_homeserv").value+"/_matrix/client/r0/login", true);
   xhttp.send(JSON.stringify(data));
   
@@ -46,9 +46,9 @@ async function main() {
   const token = await login(hs,un,pw);
   
   // add errors n stuff
-  if (token == 255) { error("Apparently, no response recieved from homeserver."); }
-  if (token == 400) { error("Invalid request sent to homeserver. Homeserver may be offline."); }
-  if (token == 403) { error("Invalid username/password. Are you on the right homeserver?"); }
+  if (token == "255") { error("Apparently, no response recieved from homeserver."); }
+  if (token == "400") { error("Invalid request sent to homeserver. Homeserver may be offline."); }
+  if (token == "403") { error("Invalid username/password. Are you on the right homeserver?"); }
   
   console.log("Connected to "+hs+", token: "+token);
 }
