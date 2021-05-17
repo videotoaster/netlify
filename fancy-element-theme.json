@@ -1,0 +1,20 @@
+{
+    "name": "VT's theme",
+    "is_dark": true,
+    "colors": {
+        "accent-color": "#0000aa",
+        "primary-color": "#0000ff",
+        "warning-color": "#ffff00",
+        "sidebar-color": "#000011",
+        "roomlist-background-color": "#000022",
+        "roomlist-text-color": "#ffffff",
+        "roomlist-text-secondary-color": "#eeeeff",
+        "roomlist-highlights-color": "#ffffff",
+        "roomlist-separator-color": "#ffffff",
+        "timeline-background-color": "#000000",
+        "timeline-text-color": "#ffffff",
+        "timeline-text-secondary-color": "#eeeeff",
+        "timeline-highlights-color": "#ffffff",
+        "reaction-row-button-selected-bg-color": "#0000dd"
+    }
+}
