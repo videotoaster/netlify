@@ -6,8 +6,7 @@
       "content" : document.getElementById("message").value
     };
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", document.getElementById("url").value);
-    xhr.send(body);
+    let x = fetch(document.getElementById("url").value,{method:"post",body:body.stringify());
   }
 </script>
 <pre>
