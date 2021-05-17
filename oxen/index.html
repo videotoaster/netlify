@@ -1,3 +1,15 @@
+<script>
+  function sendTildebot() {
+    let body = {
+      "username" : "Oxen Tildekeeper",
+      "avatar_url"  : "https://media.discordapp.net/attachments/842166065147936783/843921068494159872/Tildebot.png",
+      "content" : document.getElementById("message").value
+    };
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", document.getElementById("url").value);
+    xhr.send(body);
+  }
+</script>
 <pre>
 Oxen Tildebot Web Portal v1.0.0
 Webhook URL: <input type="text" id="url" />
