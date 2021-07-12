@@ -1,0 +1,18 @@
+/* VT.css. Feel free to copy or modify as you wish.
+   If you don't credit me, I'll break your fucking kneecaps.
+   Leave this intact.                         ~ VideoToaster */
+body {
+  background: #222222;
+  color: yellow;
+  font-family: monospace;
+  width: 50%;
+  min-width: 640px;
+}
+header {
+  text-align: center;
+  color: white;
+}
+footer {
+  text-align: center;
+  color: orange;
+}
