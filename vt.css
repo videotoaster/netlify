@@ -1,13 +1,22 @@
 /* VT.css. Feel free to copy or modify as you wish.
-   If you don't credit me, I'll break your fucking kneecaps.
+   If you don't credit me, You Won't Be What's On.
    Leave this intact.                         ~ VideoToaster */
+@font-face {
+   font-family: test;
+   src: url(/fonts/test-font.ttf);
+}
 body {
-  background: #222222;
+  background: #111111;
   color: yellow;
   font-family: monospace;
   width: 50%;
   min-width: 640px;
   margin: auto;
+}
+.testfont {
+   font-family: test;
+   color: white;
+   font-size: 32pt;
 }
 header {
   text-align: center;
