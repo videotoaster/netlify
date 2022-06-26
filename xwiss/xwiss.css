@@ -5,18 +5,19 @@ body {
   margin: 0px;
 }
 div.header {
-  padding: 8px;
+  padding-left: 10%;
   display: block;
   border-bottom: 3px solid yellow;
 }
 div.navbar {
-  padding-left: 8px;
+  padding-left: 10%;
   padding-top: 0px;
   padding-bottom: 0px;
   border-bottom: 3px solid yellow;
   margin-bottom: 4px;
 }
 div.navbar a {
+  font-variant: small-caps;
   color: yellow;
   text-decoration: none;
   padding: 4px;
@@ -31,6 +32,10 @@ div.navbar a.current {
 a {
   color: yellow;
   font-weight: bold;
+}
+p {
+  margin-left: 10%;
+  margin-right: 10%;
 }
 p.embiggen a {
   font-size: 12pt;
