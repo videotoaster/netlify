@@ -5,14 +5,15 @@ body {
   margin: 0px;
 }
 div.header {
+  padding-top: 4px;
   padding-left: 10%;
   display: block;
   border-bottom: 3px solid yellow;
 }
 div.navbar {
   padding-left: 10%;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   border-bottom: 3px solid yellow;
   margin-bottom: 4px;
 }
